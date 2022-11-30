@@ -1,6 +1,9 @@
 import Box from "@/components/Box";
 import Floor from "@/components/Floor";
+import House from "@/components/House";
+import Island from "@/components/Island";
 import LightBulb from "@/components/LightBulb";
+import Roof from "@/components/Roof";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Head from "next/head";
@@ -34,10 +37,13 @@ export default function Home() {
           }}
         >
           <OrbitControls />
-          <ambientLight color={"white"} intensity={0.2} />
-          <LightBulb position={[0, 3, 0]} />
+          <ambientLight color={"white"} intensity={0.4} />
+          <LightBulb position={[0, 5, 0]} scale={[3, 3, 3]}/>
           <Suspense fallback={null}>
             <Box rotateX={3} rotateY={0.2} />
+            <Roof />
+            <House />
+            <Island />
           </Suspense>
           <Floor position={[0, -1, 0]} />
         </Canvas>
