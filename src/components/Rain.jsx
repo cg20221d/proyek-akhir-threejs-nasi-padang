@@ -25,11 +25,11 @@ function Rain(props) {
         meshRef.current.rotation.x = 0
         meshRef.current.rotation.y = 0
         let i = 0
-        for (let x = 0; x < 10; x++)
-            for (let y = 0; y < 10; y++)
-                for (let z = 0; z < 10; z++) {
+        for (let x = 0; x < 20; x++)
+            for (let y = 0; y < 20; y++)
+                for (let z = 0; z < 20; z++) {
                     const id = i++
-                    tempObject.position.set(4.5 - x, y-tick%1, z - 4.5)
+                    tempObject.position.set(10.5 - x, y-tick%1, z - 10.5)
                     tempObject.rotation.y = 0
                     tempObject.rotation.z = 0
                     tempObject.updateMatrix()
@@ -40,7 +40,7 @@ function Rain(props) {
     return (
         <instancedMesh
             ref={meshRef}
-            args={[null, null, 1000]}>
+            args={[null, null, 8000]}>
             <capsuleGeometry args={[0.01, 0.2, 4, 8]}>
             </capsuleGeometry >
             <meshBasicMaterial color={"#3873E0"} />

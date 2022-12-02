@@ -29,7 +29,7 @@ function Floor(props) {
 
   return (
     <mesh ref={meshRef}>
-      <boxBufferGeometry args={[10, 1, 10, 22, 22]} />
+      <boxBufferGeometry args={[100, 1, 100, 22, 22]} />
       <meshPhongMaterial color='#2596be' />
     </mesh>
   );

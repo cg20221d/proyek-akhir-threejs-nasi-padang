@@ -3,6 +3,7 @@ import Floor from "@/components/Floor";
 import House from "@/components/House";
 import Island from "@/components/Island";
 import LightBulb from "@/components/LightBulb";
+import Model from "@/components/Model";
 import Rain from "@/components/Rain";
 import Roof from "@/components/Roof";
 import { OrbitControls, Text } from "@react-three/drei";
@@ -39,8 +40,9 @@ export default function Home() {
         >
           <OrbitControls />
           <ambientLight color={"white"} intensity={0.4} />
-          <LightBulb position={[0, 5, 0]} scale={[3, 3, 3]}/>
+          <LightBulb position={[0, 20, 0]} scale={[3, 3, 3]}/>
           <Suspense fallback={null}>
+            <Model />
             <Rain/>
             <Box rotateX={3} rotateY={0.2} />
             <Roof />

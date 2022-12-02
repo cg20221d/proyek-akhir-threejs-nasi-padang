@@ -8,7 +8,7 @@ function Island(props) {
     useFrame(()=>{
         var mesh = meshRef.current
         mesh.position.set(0, 0, 0)
-        mesh.scale.set(3, 1.5, 3)
+        mesh.scale.set(10, 1.5, 10)
     })
   return (
     <mesh ref={meshRef} recieveShadow={true} castShadow={true}>
