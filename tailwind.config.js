@@ -6,7 +6,11 @@ module.exports = {
       './src/components/**/*.{js,ts,jsx,tsx}',
     ], // remove unused styles in production
     theme: {
-      extend: {},
+      extend: {
+        fontFamily: {
+          roboto : ['Roboto Slab'],
+        }
+      },
     },
     variants: {
       extend: {},
