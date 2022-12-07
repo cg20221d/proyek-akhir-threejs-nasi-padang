@@ -3,12 +3,30 @@ import Image from "next/image";
 import React from "react";
 import { MdOutlineWidgets, MdWidgets } from "react-icons/md";
 
-export default function WheaterWidget() {
+export default function WheaterWidget({...props}) {
   const [today, setToday] = React.useState(new Date());
-  let [isShowing, setIsShowing] = React.useState(false);
+  let [isShowing, setIsShowing] = React.useState(true);
   React.useEffect(() => {
     setInterval(() => setToday(new Date()), 600000);
   }, []);
+
+  const iconSwitch = () => {
+    switch('/') {
+      case 'Thunderstorm' :
+        return "/assets/Cloud 3 zap.png";
+      case 'Drizzle' :
+        return "/assets/Sun cloud little rain.png";
+      case 'Rain' :
+        return "/assets/Sun cloud angled rain.png";
+      case 'Snow' :
+        return "/";
+      case 'Clear' :
+        return "/assets/sun shine.png";
+      default :
+        return "/assets/sun shine.png";
+    }
+  }
+
   return (
     <>
       <button
@@ -30,7 +48,7 @@ export default function WheaterWidget() {
         <div className="absolute top-10 flex justify-end right-24 z-10 sm:w-4/12">
           <div className="flex flex-col w-11/12 p-5 gap-y-3 text-white rounded-lg shadow-md glass-light">
             <div className="text-center">
-              <h1 className="text-3xl drop-shadow-big ">Surabaya Indonesia</h1>
+              <h1 className="text-3xl drop-shadow-big ">{props.name}, Indonesia</h1>
               <p className="font-light drop-shadow-big">
                 {today.toLocaleDateString("en-US", {
                   day: "numeric",
@@ -48,76 +66,29 @@ export default function WheaterWidget() {
                 })}
               </span>
               <Image
-                src="/assets/Sun cloud little rain.png"
+              alt={`${props.name}`}
+                src={iconSwitch()}
                 width={230}
                 height={230}
                 quality={100}
                 className="drop-shadow-big mx-auto"
               />
               <span className="inline-block font-semibold sm:text-[60px] drop-shadow-big">
-                26°C
+              {Math.round(props.main?.temp)}°c
               </span>
             </div>
-            <div className="flex justify-around text-center drop-shadow-big [&>*>p]:font-extralight [&>*>p]:text-sm ">
-              <div>
-                <p>Temp</p>
-                <span>26°C</span>
-              </div>
+            <div className="flex justify-around text-center [&>*>p]:font-extralight [&>*>p]:text-sm p-2 bg-white/80 text-black rounded-2xl shadow-xl items-center">
               <div>
                 <p>Wind</p>
-                <span>3.1 m/s</span>
+                <span>{Math.round(props.wind?.speed)} m/s</span>
               </div>
               <div>
                 <p>Humidity</p>
-                <span>70%</span>
+                <span>{Math.round(props.main?.humidity)}</span>
               </div>
               <div>
                 <p>Pressure</p>
-                <span>1013 hPa</span>
-              </div>
-            </div>
-            <div className="mx-auto text-center flex flex-col gap-y-2 ">
-              <p>Today</p>
-              <div className="flex flex-wrap gap-2">
-                <div className="p-2 text-center bg-white/30 rounded-2xl flex shadow-xl items-center">
-                  <Image
-                    src="/assets/Sun cloud little rain.png"
-                    width={55}
-                    height={55}
-                  />
-                  <div>
-                    <p className="text-xs font-light">
-                      {today.toLocaleTimeString("en-Us", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}
-                    </p>
-                    <p>26°C</p>
-                  </div>
-                </div>
-                <div className="p-2 text-center bg-white/80 text-black rounded-2xl flex shadow-xl items-center">
-                  <Image
-                    src="/assets/Sun cloud angled rain.png"
-                    width={55}
-                    height={55}
-                  />
-                  <div>
-                    <p className="text-xs font-light">12:00 AM</p>
-                    <p>26°C</p>
-                  </div>
-                </div>
-                <div className="p-2 text-center bg-white/80 text-black rounded-2xl flex shadow-xl items-center">
-                  <Image
-                    src="/assets/Moon cloud fast wind.png"
-                    width={55}
-                    height={55}
-                  />
-                  <div>
-                    <p className="text-xs font-light">08:00 PM</p>
-                    <p>26°C</p>
-                  </div>
-                </div>
+                <span>{props.main?.pressure} hPa</span>
               </div>
             </div>
           </div>
