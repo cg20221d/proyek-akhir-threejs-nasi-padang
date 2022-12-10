@@ -16,7 +16,6 @@ function Rain(props) {
     const prevRef = useRef()
 
     const colorArray = Float32Array.from(new Array(3000).fill(1))
-    console.log(colorArray)
 
     var tick = 0
     var init = true

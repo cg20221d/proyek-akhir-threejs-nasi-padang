@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Box from "@/components/Box";
 import Floor from "@/components/Floor";
 import House from "@/components/House";
@@ -6,13 +7,36 @@ import LightBulb from "@/components/LightBulb";
 import Model from "@/components/Model";
 import Rain from "@/components/Rain";
 import Roof from "@/components/Roof";
+import WeatherWidget from "@/components/WheaterWidget";
 import { OrbitControls, Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Head from "next/head";
 import { Suspense } from "react";
-import WheaterWidget from "@/components/WheaterWidget";
 
 export default function Home() {
+  const [weather, setWeather] = useState(null);
+
+  const api = {
+    key: "4f927311c182ce5391d2408e15c9dc21",
+    base: "https://api.openweathermap.org/data/2.5/",
+    cityName: 'Surabaya'
+  }
+
+  const search = () => {
+    fetch(`${api.base}weather?q=${api.cityName}&units=metric&APPID=${api.key}`).then(res => res.json()).then(result => {
+      setWeather(result);
+    });
+
+  }
+  
+  React.useEffect(() => {
+    weather === null && (
+      search()
+   ) 
+   setInterval(() => search(), 100000);
+      
+  }, []);
+
   return (
     <div className="min-w-[100vw] min-h-[100vh] bg-slate-600">
       <Head>
@@ -22,16 +46,18 @@ export default function Home() {
           content="Weathery, forcast app with interactive 3D design"
         />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
       </Head>
 
-      <main className="h-screen w-screen font-roboto">
-        <WheaterWidget />
+
+      <main className="h-screen w-screen">
+        <div className="absolute top-5 left-10 p-5 text-white rounded-lg shadow-md bg-slate-500 z-10">
+          <h1>Interactions</h1>
+          <ul className=" ">
+            <li>🖱️ Drag/scroll to adjust the camera
+            </li>
+          </ul>
+        </div>
+        <WeatherWidget {...weather} />
         <Canvas
           shadows={true}
           className="bg-sky-500"
@@ -41,10 +67,10 @@ export default function Home() {
         >
           <OrbitControls />
           <ambientLight color={"white"} intensity={0.4} />
-          <LightBulb position={[0, 20, 0]} scale={[3, 3, 3]} />
+          <LightBulb position={[0, 20, 0]} scale={[3, 3, 3]}/>
           <Suspense fallback={null}>
             <Model />
-            <Rain />
+            <Rain/>
             <Box rotateX={3} rotateY={0.2} />
             <Roof />
             <House />

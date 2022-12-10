@@ -6,8 +6,6 @@ export default function Model(props) {
   const meshRef = useRef()
 
   const { nodes, materials } = useGLTF('./house-island.gltf')
-  console.log(nodes)
-  console.log(materials)
   useFrame(()=>{
     var mesh = meshRef.current
     mesh.position.set(0, 0, 0)
