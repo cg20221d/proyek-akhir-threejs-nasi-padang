@@ -33,9 +33,28 @@ export default function Home() {
     weather === null && (
       search()
    ) 
-   setInterval(() => search(), 100000);
+   setInterval(() => search(), 3600000);
       
   }, []);
+
+  const envSwitch = (main) => {
+    switch (main) {
+      case "Thunderstorm":
+        return "/assets/Cloud 3 zap.png";
+      case "Drizzle":
+        return "/assets/Sun cloud little rain.png";
+      case "Clouds":
+        return "/assets/cloudy.png";
+      case "Rain":
+        return (<><Rain/></>);
+      case "Snow":
+        return "/";
+      case "Clear":
+        return "/assets/sun shine.png";
+      default:
+        return "/assets/sun shine.png";
+    }
+  };
 
   return (
     <div className="min-w-[100vw] min-h-[100vh] bg-slate-600">
@@ -70,7 +89,7 @@ export default function Home() {
           <LightBulb position={[0, 20, 0]} scale={[3, 3, 3]}/>
           <Suspense fallback={null}>
             <Model />
-            <Rain/>
+            {envSwitch(weather.weather[0].main)}
             <Box rotateX={3} rotateY={0.2} />
             <Roof />
             <House />
