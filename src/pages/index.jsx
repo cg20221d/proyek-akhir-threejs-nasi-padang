@@ -12,6 +12,7 @@ import { OrbitControls, Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Head from "next/head";
 import { Suspense } from "react";
+import SkyEnv from "@/components/sky";
 
 export default function Home() {
   const [weather, setWeather] = useState(null);
@@ -62,12 +63,22 @@ export default function Home() {
           shadows={true}
           className="bg-sky-500"
           camera={{
-            position: [-6, 7, 7],
+            position: [0, 0, 0],
+            fov: 75,
           }}
         >
-          <OrbitControls />
+          <OrbitControls 
+            enablePan={false}
+            maxDistance={50}
+            minDistance={15}
+            maxPolarAngle={1.5}
+            enableDamping={true}
+            target={[0, 1, 0]}
+          />
+
           <ambientLight color={"white"} intensity={0.4} />
           <LightBulb position={[0, 20, 0]} scale={[3, 3, 3]}/>
+          <SkyEnv />
           <Suspense fallback={null}>
             <Model />
             <Rain/>
