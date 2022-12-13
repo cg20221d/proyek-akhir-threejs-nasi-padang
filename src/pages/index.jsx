@@ -47,7 +47,7 @@ export default function Home() {
       });
   };
   let date = new Date();
-  date.setHours(7);
+  // date.setHours(7);
   let hour = date.getHours() - 6;
   let realHour = date.getHours();
   let minutes = date.getMinutes();
