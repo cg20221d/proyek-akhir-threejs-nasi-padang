@@ -1,17 +1,20 @@
 import React from "react";
 import { Sky } from "@react-three/drei";
 
-export default function SkyEnv(props) {
+export default function SkyEnv({sunPosition, sky}) {
+  console.log(sky, "sky");
 
   return (
     <Sky
-      distance={15000}
-      turbidity={100}
-      rayleigh={0}
-      luminance={1}
-      sunPosition={props.sunPosition}
-      inclination={0}
-      azimuth={0.25}
+      distance={sky.distance}
+      turbidity={sky.turbidity}
+      rayleigh={sky.rayleigh}
+      luminance={sky.luminance}
+      mieCoefficient={sky.mieCoefficient}
+      mieDirectionalG={sky.mieDirectionalG}
+      sunPosition={sunPosition}
+      inclination={sky.inclination}
+      azimuth={sky.azimuth}
     />
   );
 }

@@ -7,6 +7,7 @@ import Island from "@/components/Island";
 import LightBulb from "@/components/LightBulb";
 import Model from "@/components/Model";
 import Rain from "@/components/Rain";
+import Lamp from "@/components/Lamp";
 import Roof from "@/components/Roof";
 import WeatherWidget from "@/components/WheaterWidget";
 import { OrbitControls, Text } from "@react-three/drei";
@@ -16,35 +17,45 @@ import { Suspense } from "react";
 import SkyEnv from "@/components/Sky";
 import Snow from "@/components/Snow";
 import Cloud from "@/components/Cloud";
+import useWeatherStore from "../store/useWeatherStore";
+import useEnvStore from "../store/usEnvStore";
+import Moon from "@/components/Moon";
+import Sun from "@/components/Sun";
 import Kucing from "@/components/Kucing";
 
 export default function Home() {
+  const data = useWeatherStore();
+  const env = useEnvStore()
   const [weather, setWeather] = useState(null);
+  const [sky, setSky] = useState(env.sky.day);
 
   const api = {
     key: "4f927311c182ce5391d2408e15c9dc21",
     base: "https://api.openweathermap.org/data/2.5/",
     cityName: 'Surabaya'
   }
+  function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
 
   const search = () => {
     fetch(`${api.base}weather?q=${api.cityName}&units=metric&APPID=${api.key}`).then(res => res.json()).then(result => {
       setWeather(result);
     });
-
   }
     let date = new Date
+    date.setHours(6)
     let hour = date.getHours()-6
+    let realHour = date.getHours()
     let minutes = date.getMinutes()
     if(minutes == 0) minutes = 1
-    console.log(hour, minutes)
+    // console.log(hour, minutes)
     let degree = (360*(((hour*60)+minutes)/(24*60)))
     let radian = Math.PI*degree/180
 
-
     let sunPositionX = 10*Math.cos(radian)
     let sunPositionY = 10*Math.sin(radian)
-    console.log(sunPositionX, sunPositionY)
+    // console.log(sunPositionX, sunPositionY)
 
   React.useEffect(() => {
     weather === null && (
@@ -54,8 +65,18 @@ export default function Home() {
       
   }, []);
 
-  // const { bind } = useTheme({ type: 'rain', mode: 'day' })
-
+  React.useEffect(() => {
+    if (realHour > 6 && realHour < 16 ) {
+      console.log(realHour, "day")
+      setSky(env.sky.day)
+    }  else if (realHour >= 16 && realHour < 18) {
+      console.log(realHour, "sunset")
+      setSky(env.sky.sunset)
+    }else {
+      console.log(realHour, "night");
+      setSky(env.sky.night)
+    }
+  }, [hour]);
   return (
     <div className="min-w-[100vw] min-h-[100vh] bg-slate-600">
       <Head>
@@ -96,19 +117,21 @@ export default function Home() {
             target={[0, 1, 0]}
           />
 
-          <ambientLight color={"white"} intensity={0.4} />
-          <LightBulb position={[0, 5, 0]} scale={[3, 3, 3]}/>
+          <ambientLight color={"white"} intensity={1} />
+          <LightBulb position={[4, 5.5, 0]} scale={[0.8, 0.8, 0.8]}/>
           <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]}/>
           <Suspense fallback={null}>
             <Rain />
-            <Cloud position={[0, 15, 0]}/>
-            {/* <Cloud position={[4, 10, 2]}/> */}
+            <Cloud position={[0, 10, 0]}/>
+            <Cloud position={[4, 10, 2]}/>
             {/* <Snow /> */}
             <Model />
+
             <Kucing />
             {/* <Box rotateX={3} rotateY={0.2} /> */}
             {/* <Roof /> */}
             {/* <House /> */}
+            <Lamp />
             <Island />
           </Suspense>
           <Floor position={[0, -1, 0]} />
