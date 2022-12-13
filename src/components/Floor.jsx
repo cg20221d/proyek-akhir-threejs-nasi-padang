@@ -1,38 +1,45 @@
-import * as THREE from 'three'
-import { useFrame, useLoader } from "@react-three/fiber";
-import React, { useState, useEffect, useRef } from "react";
-import { TextureLoader } from "three";
+import React, { useRef, useMemo } from "react";
+import { extend, useThree, useLoader, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 
-function Floor(props) {
-  const texture = useLoader(TextureLoader, "/assets/floor-texture.jpg");
-  const meshRef = useRef()
+import { Water } from "three/examples/jsm/objects/Water.js";
 
-  let tick = 0
-  useFrame(()=>{
-    tick++
-    // const time = state.clock.getElapsedTime()
-    var mesh = meshRef.current
-    mesh.position.set(0, 0, 0)
-    let positionArr = mesh.geometry.attributes.position.array
-    for(var i=0;i<positionArr.length;i++){
-      if((i+2)%3==0){
-          if(positionArr[i]>0) positionArr[i]+= Math.sin(tick * .015) * 0.04
-      }
-    }
-    // mesh.position.set(0, 3, 3)
-    // mesh.instanceMatrix.needsUpdate = true
-    // console.log(mesh)
-    // mesh.rotation.set(3, 3, 3)
-    // meshRef.current.needsUpdate = true
-  })
+extend({ Water });
 
+function Ocean() {
+  const ref = useRef();
+  const gl = useThree((state) => state.gl);
+  const waterNormals = useLoader(
+    THREE.TextureLoader, "/assets/waternormals.jpg"
+  );
 
+  waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
+  const geom = useMemo(() => new THREE.PlaneGeometry(10000, 10000), []);
+  const config = useMemo(
+    () => ({
+      waterNormals,
+      sunDirection: new THREE.Vector3(),
+      distortionScale:0,
+      fog: true,
+      format: gl.encoding,
+      sunColor: 0xffffff,
+      waterColor: 0x3EC2D0,
+      
+    }),
+    []
+    [waterNormals]
+  );
+  useFrame(
+    (state, delta) => (ref.current.material.uniforms.time.value += delta)
+  );
   return (
-    <mesh ref={meshRef}>
-      <boxBufferGeometry args={[100, 1, 100, 22, 22]} />
-      <meshPhongMaterial color='#2596be' />
-    </mesh>
+    <water
+      ref={ref}
+      args={[geom, config]}
+      rotation-x={-Math.PI / 2}
+      position={[0, 0, 0]}
+    />
   );
 }
 
-export default Floor;
+export default Ocean;
