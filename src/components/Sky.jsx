@@ -7,7 +7,7 @@ export default function SkyEnv(props) {
     <Sky
       distance={15000}
       turbidity={100}
-      rayleigh={0}
+      rayleigh={-0.2}
       luminance={1}
       sunPosition={props.sunPosition}
       inclination={0}

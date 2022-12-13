@@ -95,13 +95,13 @@ export default function Home() {
             target={[0, 1, 0]}
           />
 
-          <ambientLight color={"white"} intensity={0.4} />
+          <ambientLight color={"white"} intensity={1} />
           <LightBulb position={[0, 5, 0]} scale={[3, 3, 3]}/>
           <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]}/>
           <Suspense fallback={null}>
             <Rain />
-            <Cloud position={[0, 10, 0]}/>
-            <Cloud position={[4, 10, 2]}/>
+            <Cloud position={[0, 15, 0]}/>
+            <Cloud position={[4, 15, 2]}/>
             {/* <Snow /> */}
             <Model />
             <Box rotateX={3} rotateY={0.2} />
