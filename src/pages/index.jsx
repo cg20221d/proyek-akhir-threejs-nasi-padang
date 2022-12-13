@@ -17,13 +17,11 @@ import { Suspense } from "react";
 import SkyEnv from "@/components/Sky";
 import Snow from "@/components/Snow";
 import Cloud from "@/components/Cloud";
-<<<<<<< Updated upstream
 import useWeatherStore from "../store/useWeatherStore";
 import useEnvStore from "../store/usEnvStore";
-=======
 import Moon from "@/components/Moon";
 import Sun from "@/components/Sun";
->>>>>>> Stashed changes
+import Kucing from "@/components/Kucing";
 
 export default function Home() {
   const data = useWeatherStore();
@@ -112,55 +110,27 @@ export default function Home() {
         >
           <OrbitControls 
             enablePan={false}
-            maxDistance={20}
-            minDistance={15}
+            maxDistance={30}
+            minDistance={10}
             maxPolarAngle={1.5}
             enableDamping={true}
             target={[0, 1, 0]}
           />
 
           <ambientLight color={"white"} intensity={1} />
-<<<<<<< Updated upstream
-          <LightBulb position={[0, 5, 0]} scale={[3, 3, 3]}/>
-          <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]} sky={sky}/>
-          <Suspense fallback={null}>
-            {
-              weather?.weather[0].main === "Rain" && <Rain />
-            }
-            {
-              weather?.weather[0].main === "Snow" && <Snow />
-            }
-            {
-              ( weather?.clouds.all < 40) ? (
-                Array.from(Array(1).keys()).map((i) => (
-                  <Cloud key={i} position={[randomIntFromInterval(-15, 15), randomIntFromInterval(11, 13), randomIntFromInterval(-15, 15)]} />
-                ))
-              ) : (weather?.clouds.all >= 40 && weather?.clouds.all < 70) ?(
-                Array.from(Array(2).keys()).map((i) => (
-                  <Cloud key={i} position={[randomIntFromInterval(-15, 15), randomIntFromInterval(11, 13), randomIntFromInterval(-15, 15)]} />
-                ))
-              ) : (
-                Array.from(Array(3).keys()).map((i) => (
-                  <Cloud key={i} position={[randomIntFromInterval(-15, 15), randomIntFromInterval(11, 13), randomIntFromInterval(-15, 15)]} />
-                ))
-              )
-            }
-=======
           <LightBulb position={[4, 5.5, 0]} scale={[0.8, 0.8, 0.8]}/>
           <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]}/>
           <Suspense fallback={null}>
             <Rain />
-            <Moon />
-            <Sun />
-            <Cloud position={[0, 15, 0]}/>
-            <Cloud position={[4, 15, 2]}/>
+            <Cloud position={[0, 10, 0]}/>
+            <Cloud position={[4, 10, 2]}/>
             {/* <Snow /> */}
->>>>>>> Stashed changes
             <Model />
 
-            <Box rotateX={3} rotateY={0.2} />
-            <Roof />
-            <House />
+            <Kucing />
+            {/* <Box rotateX={3} rotateY={0.2} /> */}
+            {/* <Roof /> */}
+            {/* <House /> */}
             <Lamp />
             <Island />
           </Suspense>
