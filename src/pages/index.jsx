@@ -33,7 +33,7 @@ export default function Home() {
 
   }
     let date = new Date
-    let hour = date.getHours()-12
+    let hour = date.getHours()-6
     let minutes = date.getMinutes()
     if(minutes == 0) minutes = 1
     console.log(hour, minutes)
