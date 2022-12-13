@@ -5,7 +5,7 @@ import { MdOutlineWidgets, MdWidgets } from "react-icons/md";
 
 export default function WheaterWidget({ ...props }) {
   const [today, setToday] = React.useState(new Date());
-  let [isShowing, setIsShowing] = React.useState(true);
+  let [isShowing, setIsShowing] = React.useState(false);
   React.useEffect(() => {
     setInterval(() => setToday(new Date()), 600000);
   }, []);
@@ -28,7 +28,7 @@ export default function WheaterWidget({ ...props }) {
         return "/assets/sun shine.png";
     }
   };
-  console.log(props.weather && props.weather[0]);
+  // console.log(props.weather && props.weather[0]);
 
   return (
     <>

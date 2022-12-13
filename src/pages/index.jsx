@@ -16,34 +16,41 @@ import { Suspense } from "react";
 import SkyEnv from "@/components/Sky";
 import Snow from "@/components/Snow";
 import Cloud from "@/components/Cloud";
+import useWeatherStore from "../store/useWeatherStore";
+import useEnvStore from "../store/usEnvStore";
 
 export default function Home() {
+  const data = useWeatherStore();
+  const env = useEnvStore()
   const [weather, setWeather] = useState(null);
+  const [sky, setSky] = useState(env.sky.day);
 
   const api = {
     key: "4f927311c182ce5391d2408e15c9dc21",
     base: "https://api.openweathermap.org/data/2.5/",
     cityName: 'Surabaya'
   }
+  function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
 
   const search = () => {
     fetch(`${api.base}weather?q=${api.cityName}&units=metric&APPID=${api.key}`).then(res => res.json()).then(result => {
       setWeather(result);
     });
-
   }
     let date = new Date
     let hour = date.getHours()-6
+    let realHour = date.getHours()
     let minutes = date.getMinutes()
     if(minutes == 0) minutes = 1
-    console.log(hour, minutes)
+    // console.log(hour, minutes)
     let degree = (360*(((hour*60)+minutes)/(24*60)))
     let radian = Math.PI*degree/180
 
-
     let sunPositionX = 10*Math.cos(radian)
     let sunPositionY = 10*Math.sin(radian)
-    console.log(sunPositionX, sunPositionY)
+    // console.log(sunPositionX, sunPositionY)
 
   React.useEffect(() => {
     weather === null && (
@@ -53,8 +60,18 @@ export default function Home() {
       
   }, []);
 
-  // const { bind } = useTheme({ type: 'rain', mode: 'day' })
-
+  React.useEffect(() => {
+    if (realHour > 6 && realHour < 16 ) {
+      console.log(realHour, "day")
+      setSky(env.sky.day)
+    }  else if (realHour >= 16 && realHour < 18) {
+      console.log(realHour, "sunset")
+      setSky(env.sky.sunset)
+    }else {
+      console.log(realHour, "night");
+      setSky(env.sky.night)
+    }
+  }, [hour]);
   return (
     <div className="min-w-[100vw] min-h-[100vh] bg-slate-600">
       <Head>
@@ -97,13 +114,31 @@ export default function Home() {
 
           <ambientLight color={"white"} intensity={1} />
           <LightBulb position={[0, 5, 0]} scale={[3, 3, 3]}/>
-          <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]}/>
+          <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]} sky={sky}/>
           <Suspense fallback={null}>
-            <Rain />
-            <Cloud position={[0, 15, 0]}/>
-            <Cloud position={[4, 15, 2]}/>
-            {/* <Snow /> */}
+            {
+              weather?.weather[0].main === "Rain" && <Rain />
+            }
+            {
+              weather?.weather[0].main === "Snow" && <Snow />
+            }
+            {
+              ( weather?.clouds.all < 40) ? (
+                Array.from(Array(1).keys()).map((i) => (
+                  <Cloud key={i} position={[randomIntFromInterval(-15, 15), randomIntFromInterval(11, 13), randomIntFromInterval(-15, 15)]} />
+                ))
+              ) : (weather?.clouds.all >= 40 && weather?.clouds.all < 70) ?(
+                Array.from(Array(2).keys()).map((i) => (
+                  <Cloud key={i} position={[randomIntFromInterval(-15, 15), randomIntFromInterval(11, 13), randomIntFromInterval(-15, 15)]} />
+                ))
+              ) : (
+                Array.from(Array(3).keys()).map((i) => (
+                  <Cloud key={i} position={[randomIntFromInterval(-15, 15), randomIntFromInterval(11, 13), randomIntFromInterval(-15, 15)]} />
+                ))
+              )
+            }
             <Model />
+
             <Box rotateX={3} rotateY={0.2} />
             <Roof />
             <House />

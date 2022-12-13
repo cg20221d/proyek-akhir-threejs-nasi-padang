@@ -1,6 +1,7 @@
 // @js-ignore
 {
   "compilerOptions": {
+    "module": "es6",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
