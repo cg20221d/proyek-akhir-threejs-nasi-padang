@@ -8,7 +8,7 @@ function randomIntFromInterval(min, max) { // min and max included
   }
   
 
-function Rain(props) {
+function Snow(props) {
     const tempObject = new THREE.Object3D()
     const tempColor = new THREE.Color()
 
@@ -20,7 +20,7 @@ function Rain(props) {
     var tick = 0
     var init = true
     useFrame((state) => {
-        tick += 0.1
+        tick += 0.05
         meshRef.current.rotation.x = 0
         meshRef.current.rotation.y = 0
         let i = 0
@@ -40,10 +40,10 @@ function Rain(props) {
         <instancedMesh
             ref={meshRef}
             args={[null, null, 8000]}>
-            <capsuleGeometry args={[0.01, 0.2, 4, 8]}>
-            </capsuleGeometry >
-            <meshBasicMaterial color={"#3873E0"} />
+            <sphereGeometry args={[0.04, 0.2, 4, 8]}>
+            </sphereGeometry >
+            <meshBasicMaterial color={"#FFFFFF"} />
         </instancedMesh>
     );
 }
-export default Rain;
+export default Snow;

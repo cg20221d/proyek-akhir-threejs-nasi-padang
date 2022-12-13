@@ -19,7 +19,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
-    "three": "^0.146.0"
+    "react-three-fiber": "^6.0.13",
+    "three": "^0.147.0",
+    "threejs-weather": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

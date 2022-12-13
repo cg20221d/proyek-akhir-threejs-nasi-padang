@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// import { Rain, useTheme } from 'threejs-weather'
 import Box from "@/components/Box";
 import Floor from "@/components/Floor";
 import House from "@/components/House";
@@ -12,7 +13,9 @@ import { OrbitControls, Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Head from "next/head";
 import { Suspense } from "react";
-import SkyEnv from "@/components/sky";
+import SkyEnv from "@/components/Sky";
+import Snow from "@/components/Snow";
+import Cloud from "@/components/Cloud";
 
 export default function Home() {
   const [weather, setWeather] = useState(null);
@@ -29,7 +32,19 @@ export default function Home() {
     });
 
   }
-  
+    let date = new Date
+    let hour = date.getHours()-12
+    let minutes = date.getMinutes()
+    if(minutes == 0) minutes = 1
+    console.log(hour, minutes)
+    let degree = (360*(((hour*60)+minutes)/(24*60)))
+    let radian = Math.PI*degree/180
+
+
+    let sunPositionX = 10*Math.cos(radian)
+    let sunPositionY = 10*Math.sin(radian)
+    console.log(sunPositionX, sunPositionY)
+
   React.useEffect(() => {
     weather === null && (
       search()
@@ -37,6 +52,8 @@ export default function Home() {
    setInterval(() => search(), 100000);
       
   }, []);
+
+  // const { bind } = useTheme({ type: 'rain', mode: 'day' })
 
   return (
     <div className="min-w-[100vw] min-h-[100vh] bg-slate-600">
@@ -60,16 +77,18 @@ export default function Home() {
         </div>
         <WeatherWidget {...weather} />
         <Canvas
+          color="white"
           shadows={true}
           className="bg-sky-500"
           camera={{
             position: [0, 0, 0],
             fov: 75,
           }}
+          // {...bind()}
         >
           <OrbitControls 
             enablePan={false}
-            maxDistance={50}
+            maxDistance={20}
             minDistance={15}
             maxPolarAngle={1.5}
             enableDamping={true}
@@ -77,11 +96,14 @@ export default function Home() {
           />
 
           <ambientLight color={"white"} intensity={0.4} />
-          <LightBulb position={[0, 20, 0]} scale={[3, 3, 3]}/>
-          <SkyEnv />
+          <LightBulb position={[0, 5, 0]} scale={[3, 3, 3]}/>
+          <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]}/>
           <Suspense fallback={null}>
+            <Rain />
+            <Cloud position={[0, 10, 0]}/>
+            <Cloud position={[4, 10, 2]}/>
+            {/* <Snow /> */}
             <Model />
-            <Rain/>
             <Box rotateX={3} rotateY={0.2} />
             <Roof />
             <House />
