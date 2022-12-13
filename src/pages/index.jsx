@@ -100,13 +100,13 @@ export default function Home() {
           <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]}/>
           <Suspense fallback={null}>
             <Rain />
-            <Cloud position={[0, 10, 0]}/>
-            <Cloud position={[4, 10, 2]}/>
+            <Cloud position={[0, 15, 0]}/>
+            {/* <Cloud position={[4, 10, 2]}/> */}
             {/* <Snow /> */}
             <Model />
-            <Box rotateX={3} rotateY={0.2} />
-            <Roof />
-            <House />
+            {/* <Box rotateX={3} rotateY={0.2} /> */}
+            {/* <Roof /> */}
+            {/* <House /> */}
             <Island />
           </Suspense>
           <Floor position={[0, -1, 0]} />
