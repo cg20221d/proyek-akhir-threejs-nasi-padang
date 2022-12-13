@@ -16,6 +16,7 @@ import { Suspense } from "react";
 import SkyEnv from "@/components/Sky";
 import Snow from "@/components/Snow";
 import Cloud from "@/components/Cloud";
+import Kucing from "@/components/Kucing";
 
 export default function Home() {
   const [weather, setWeather] = useState(null);
@@ -104,6 +105,7 @@ export default function Home() {
             {/* <Cloud position={[4, 10, 2]}/> */}
             {/* <Snow /> */}
             <Model />
+            <Kucing />
             {/* <Box rotateX={3} rotateY={0.2} /> */}
             {/* <Roof /> */}
             {/* <House /> */}
