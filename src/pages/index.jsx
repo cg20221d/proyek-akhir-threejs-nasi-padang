@@ -7,6 +7,7 @@ import Island from "@/components/Island";
 import LightBulb from "@/components/LightBulb";
 import Model from "@/components/Model";
 import Rain from "@/components/Rain";
+import Lamp from "@/components/Lamp";
 import Roof from "@/components/Roof";
 import WeatherWidget from "@/components/WheaterWidget";
 import { OrbitControls, Text } from "@react-three/drei";
@@ -16,8 +17,13 @@ import { Suspense } from "react";
 import SkyEnv from "@/components/Sky";
 import Snow from "@/components/Snow";
 import Cloud from "@/components/Cloud";
+<<<<<<< Updated upstream
 import useWeatherStore from "../store/useWeatherStore";
 import useEnvStore from "../store/usEnvStore";
+=======
+import Moon from "@/components/Moon";
+import Sun from "@/components/Sun";
+>>>>>>> Stashed changes
 
 export default function Home() {
   const data = useWeatherStore();
@@ -40,6 +46,7 @@ export default function Home() {
     });
   }
     let date = new Date
+    date.setHours(6)
     let hour = date.getHours()-6
     let realHour = date.getHours()
     let minutes = date.getMinutes()
@@ -113,6 +120,7 @@ export default function Home() {
           />
 
           <ambientLight color={"white"} intensity={1} />
+<<<<<<< Updated upstream
           <LightBulb position={[0, 5, 0]} scale={[3, 3, 3]}/>
           <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]} sky={sky}/>
           <Suspense fallback={null}>
@@ -137,11 +145,23 @@ export default function Home() {
                 ))
               )
             }
+=======
+          <LightBulb position={[4, 5.5, 0]} scale={[0.8, 0.8, 0.8]}/>
+          <SkyEnv sunPosition={[sunPositionX,sunPositionY,0]}/>
+          <Suspense fallback={null}>
+            <Rain />
+            <Moon />
+            <Sun />
+            <Cloud position={[0, 15, 0]}/>
+            <Cloud position={[4, 15, 2]}/>
+            {/* <Snow /> */}
+>>>>>>> Stashed changes
             <Model />
 
             <Box rotateX={3} rotateY={0.2} />
             <Roof />
             <House />
+            <Lamp />
             <Island />
           </Suspense>
           <Floor position={[0, -1, 0]} />
