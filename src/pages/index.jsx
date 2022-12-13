@@ -88,8 +88,8 @@ export default function Home() {
         >
           <OrbitControls 
             enablePan={false}
-            maxDistance={20}
-            minDistance={15}
+            maxDistance={30}
+            minDistance={10}
             maxPolarAngle={1.5}
             enableDamping={true}
             target={[0, 1, 0]}
