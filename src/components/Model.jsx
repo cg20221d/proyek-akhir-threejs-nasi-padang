@@ -9,8 +9,9 @@ export default function Model(props) {
   console.log("house : ", nodes, materials)
   useFrame(()=>{
     var mesh = meshRef.current
+    mesh.rotation.set(0, -0.37, 0)
     mesh.position.set(0, 0, 0)
-    mesh.scale.set(0.5, 0.5, 0.5)
+    mesh.scale.set(0.7, 0.7, 0.7)
 })
   return (
     <group ref={meshRef} {...props} dispose={null}>
