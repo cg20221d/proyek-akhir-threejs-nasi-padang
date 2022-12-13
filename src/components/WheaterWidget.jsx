@@ -17,7 +17,7 @@ export default function WheaterWidget({ ...props }) {
       case "Drizzle":
         return "/assets/Sun cloud little rain.png";
       case "Clouds":
-        return "/assets/Cloud 3 zap.png";
+        return "/assets/cloudy.png";
       case "Rain":
         return "/assets/Sun cloud angled rain.png";
       case "Snow":

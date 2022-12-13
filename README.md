@@ -12,7 +12,6 @@
 ### Link Presentasi : [Here!!➡️](https://docs.google.com/presentation/d/1Oourvr8EKX3XC843ZDB_xXEPUP0V7JkG72c3mVSR_1o/edit?usp=sharing)
 
 
-
 ## Tech Stack
 - NextJs ver. 13.0
 - Tailwindcss
@@ -34,4 +33,12 @@ npm install --global yarn
 ```
 alternative bisa menggunakan ``npm install``, tetapi untuk performa yarn lebih disarankan
 
-### 3. You good to go
+### 3. Lakukan build
+```bash
+yarn build
+```
+
+### 4. Projek sudah dapat dijalankan
+```bash
+yarn start
+```
